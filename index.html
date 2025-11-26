@@ -625,6 +625,31 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+    // ✅ Capturar el evento beforeinstallprompt (disponible solo si se cumplen requisitos)
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Chrome no muestra el banner automáticamente → lo guardamos
+  e.preventDefault();
+  deferredPrompt = e;
+
+  // ✅ Mostrar el prompt tras 2 segundos (sin esperar a interacción)
+  setTimeout(() => {
+    if (deferredPrompt) {
+      // Opcional: mini-banner personalizado (mejor UX), o directo:
+      deferredPrompt.prompt(); // ← abre el cuadro nativo de instalación
+
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('✅ Usuario instaló la PWA');
+        } else {
+          console.log('❌ Usuario rechazó la instalación');
+        }
+        deferredPrompt = null;
+      });
+    }
+  }, 2000); // 2 segundos después de cargar (puedes reducir a 1000 si quieres)
+});
   </script>
 </body>
 </html>
