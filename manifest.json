@@ -1,0 +1,23 @@
+{
+  "name": "Anita Bonita!",
+  "short_name": "Anita bonita!",
+  "description": "Una propuesta de amor interactiva para Anita",
+  "start_url": "/anita/",
+  "scope": "/anita/",
+  "display": "standalone",
+  "background_color": "#240028",
+  "theme_color": "#240028",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/anita/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/anita/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
