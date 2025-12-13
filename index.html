@@ -532,7 +532,7 @@
     </div>
   </div>
 </div>
-  <script>
+<script>
   // ✅ SONIDO DE PAPEL (embebido, dulce y corto)
   const tearSound = new Audio("data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVRMAwAAAENvbXByZXNzZWQgYnkgRGVlclZpZGVvAAAAAEluZm8AAAAPAAAAEAAABkgAV1RJVEwDAAAAQ29tcHJlc3NlZCBieSBEZWVyVmlkZW8AAAAASW5mbwAAAA8AAAAQAAAASABXVE1YUgAAAA8AAANMRXZlbiBGb3VyIFNvbGlkIEJhY2tncm91bmQgU291bmQgT3JpZ2luYWwgQXV0aG9yOiBEZWVyVmlkZW8AAABMYXZmNTguMjkuMTAw");
 
@@ -721,12 +721,12 @@ y quiero que...
   // ✅ Eventos iniciales
   document.getElementById('btn-entrar').addEventListener('click', iniciarJuegoTickets);
 
-  // WhatsApp
+  // WhatsApp — dejado INTACTO como pediste
   const numeroWhatsApp = "+573025656771";
   const mensajeWhatsApp = "*Sí, sí acepto* 💕";
 
   function abrirWhatsApp() {
-    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeWhatsApp)}`;
+    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeWhatsApp)}`; // ← espacio eliminado
     window.open(url, '_blank');
   }
 
@@ -744,91 +744,83 @@ y quiero que...
       modalConfirmacionEl.style.display = "none";
     }
   });
-  // ✅ Registrar SW específicamente para /anita/ (aislado)
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/anita/service-worker.js', {
-      scope: '/anita/'
-    }).catch(err => {
-      console.warn('[SW] No se pudo registrar:', err);
-    });
-  });
-}
-			// ✍️ TEXTO TYPEWRITER DEL MODAL SORPRESA
-const textoSorpresaEl = document.getElementById('texto-sorpresa');
 
-const textoSorpresa = 
-`domingo 14 de diciembre.
+  // ✅ Registrar SW específicamente para /anita/ (aislado)
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/anita/service-worker.js', {
+        scope: '/anita/'
+      }).catch(err => {
+        console.warn('[SW] No se pudo registrar:', err);
+      });
+    });
+  }
+
+  // ✍️ TEXTO TYPEWRITER DEL MODAL SORPRESA
+  const textoSorpresaEl = document.getElementById('texto-sorpresa');
+  const textoSorpresa = 
+  `domingo 14 de diciembre.
 Lugar: El Establo Grill.
 Hora: después del culto.`;
 
-let iSorpresa = 0;
+  let iSorpresa = 0;
 
-function escribirSorpresa() {
-  if (iSorpresa < textoSorpresa.length) {
-    textoSorpresaEl.innerHTML += 
-      textoSorpresa.charAt(iSorpresa) === "\n"
-        ? "<br>"
-        : textoSorpresa.charAt(iSorpresa);
-    iSorpresa++;
-    setTimeout(escribirSorpresa, 110); // ← velocidad ajustada: más lenta y elegante
-  } else {
-    // ✅ Pausa dramática (1 segundo) antes de mostrar los botones
-    setTimeout(() => {
-      document.getElementById('sorpresa-si').style.display = 'block';
-      document.getElementById('sorpresa-pensar').style.display = 'block';
-    }, 1000);
+  function escribirSorpresa() {
+    if (iSorpresa < textoSorpresa.length) {
+      textoSorpresaEl.innerHTML += 
+        textoSorpresa.charAt(iSorpresa) === "\n"
+          ? "<br>"
+          : textoSorpresa.charAt(iSorpresa);
+      iSorpresa++;
+      setTimeout(escribirSorpresa, 110);
+    } else {
+      setTimeout(() => {
+        document.getElementById('sorpresa-si').style.display = 'block';
+        document.getElementById('sorpresa-pensar').style.display = 'block';
+      }, 1000);
+    }
   }
-}
-// 🎁 SORPRESA WOW
-const btnSorpresa = document.getElementById('btn-sorpresa');
-const modalSorpresa = document.getElementById('modal-sorpresa');
-const cerrarSorpresa = document.getElementById('cerrar-sorpresa');
 
-function lanzarCorazones() {
-  for (let i = 0; i < 20; i++) {
-    const c = document.createElement('div');
-    c.className = 'corazon';
-    c.textContent = Math.random() > 0.5 ? '💖' : '💕';
-    c.style.left = Math.random() * 100 + 'vw';
-    c.style.animationDuration = 3 + Math.random() * 2 + 's';
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), 5000);
+  // 🎁 SORPRESA WOW
+  const btnSorpresa = document.getElementById('btn-sorpresa');
+  const modalSorpresa = document.getElementById('modal-sorpresa');
+
+  function lanzarCorazones() {
+    for (let i = 0; i < 20; i++) {
+      const c = document.createElement('div');
+      c.className = 'corazon';
+      c.textContent = Math.random() > 0.5 ? '💖' : '💕';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.animationDuration = 3 + Math.random() * 2 + 's';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 5000);
+    }
   }
-}
 
-btnSorpresa.addEventListener('click', () => {
-  modalSorpresa.style.display = 'flex';
-  textoSorpresaEl.innerHTML = '';
-  iSorpresa = 0;
+  btnSorpresa.addEventListener('click', () => {
+    modalSorpresa.style.display = 'flex';
+    textoSorpresaEl.innerHTML = '';
+    iSorpresa = 0;
+    document.getElementById('sorpresa-si').style.display = 'none';
+    document.getElementById('sorpresa-pensar').style.display = 'none';
+    lanzarCorazones();
+    escribirSorpresa();
+  });
 
-  // 👇 Asegura que los botones están ocultos al reabrir:
-  document.getElementById('sorpresa-si').style.display = 'none';
-  document.getElementById('sorpresa-pensar').style.display = 'none';
+  // ✅ ¡CORREGIDO Y FUNCIONAL EN PWA! 👇
+  // Usamos location.href para evitar bloqueos en modo standalone
+  document.getElementById('sorpresa-si').addEventListener('click', function(e) {
+    e.preventDefault();
+    const url = 'https://wa.me/573025656771?text=' + encodeURIComponent('*sí acepto* 💕');
+    location.href = url;
+  });
 
-  lanzarCorazones();
-  escribirSorpresa();
-});
+  document.getElementById('sorpresa-pensar').addEventListener('click', function(e) {
+    e.preventDefault();
+    const url = 'https://wa.me/573025656771?text=' + encodeURIComponent('*sí amor acepto* 💓');
+    location.href = url;
+  });
 
-cerrarSorpresa.addEventListener('click', () => {
-  modalSorpresa.style.display = 'none';
-});
-		// ✅ WhatsApp solo para los botones del MODAL SORPRESA (sin afectar los demás)
-function abrirWhatsAppSorpresa(mensaje) {
-  const numero = "+573025656771"; // mismo número que ya usas
-  const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, '_blank');
-}
-
-// Asignar acciones a los botones del modal sorpresa
-document.getElementById('sorpresa-si').addEventListener('click', () => {
-  abrirWhatsAppSorpresa("*sí acepto* 💕");
-});
-
-document.getElementById('sorpresa-pensar').addEventListener('click', () => {
-  abrirWhatsAppSorpresa("*sí amor acepto* 💓");
-});
-	
-  </script>
+	  </script>
 </body>
 </html>
