@@ -1,4 +1,4 @@
-const CACHE_NAME = 'anita-bonita-v2'; // 🔥 CAMBIO DE VERSIÓN
+const CACHE_NAME = 'anita-bonita-v3'; // 🔥 CAMBIO DE VERSIÓN
 const urlsToCache = [
   '/anita/',
   '/anita/index.html',
